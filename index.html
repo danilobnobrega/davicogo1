@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Davi Cogo · Assessor de Investimentos em Porto Alegre</title>
+  <meta name="description" content="Davi Cogo, assessor de investimentos vinculado à Nattos Capital, credenciada ao BTG Pactual. Porto Alegre, RS." />
+  <meta name="theme-color" content="#07090d" />
+  <meta property="og:title" content="Davi Cogo · Assessor de Investimentos" />
+  <meta property="og:description" content="Assessoria de investimentos em Porto Alegre, com a estrutura do BTG Pactual." />
+  <meta property="og:image" content="/davi-src.png" />
+  <link rel="icon" href="/favicon.svg" />
+</head>
+<body>
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <div class="loader" data-loader aria-hidden="true">
+    <span class="loader__n" data-loader-n>00</span>
+  </div>
+
+  <header class="hdr is-hidden" data-hdr>
+    <a class="hdr__brand" href="#topo" data-nav>Davi Cogo</a>
+    <nav class="hdr__nav">
+      <button class="hdr__menu" type="button" data-menu-btn aria-expanded="false" aria-controls="menu">
+        <span class="hdr__menu-label" data-menu-label>Menu</span>
+      </button>
+      <a class="pill" href="#contato" data-nav><span>Conversar</span></a>
+    </nav>
+  </header>
+
+  <div class="menu" id="menu" data-menu aria-hidden="true">
+    <ol class="menu__list">
+      <li><a href="#quem" data-nav><span class="menu__w">Quem sou</span></a></li>
+      <li><a href="#trajetoria" data-nav><span class="menu__w">Trajetória</span></a></li>
+      <li><a href="#ajuda" data-nav><span class="menu__w">Como posso te ajudar</span></a></li>
+      <li><a href="#como" data-nav><span class="menu__w">Como funciona</span></a></li>
+      <li><a href="#estrutura" data-nav><span class="menu__w">Nattos + BTG</span></a></li>
+      <li><a href="#contato" data-nav><span class="menu__w">Contato</span></a></li>
+    </ol>
+    <p class="menu__foot">Assessor de investimentos · Porto Alegre</p>
+  </div>
+
+  <main>
+    <!-- 1 · Abertura -->
+    <section class="hero" id="topo" data-hero>
+      <div class="hero__view" data-view="hero"></div>
+      <h1 class="sr">Davi Cogo, assessor de investimentos em Porto Alegre</h1>
+    </section>
+
+    <!-- 2 · Quem sou -->
+    <section class="about" id="quem">
+      <div class="about__photo" data-view="slit" role="img" aria-label="Foto de Davi Cogo"></div>
+      <div class="about__text">
+        <p class="eyebrow" data-split>Quem sou</p>
+        <h2 class="about__lead" data-split>Economista pela PUCRS, com a disciplina que aprendi no Exército.</h2>
+        <p class="about__body" data-fade>Atendo pessoas e famílias de Porto Alegre que querem investir com método. Primeiro entendo o que você quer construir e em quanto tempo. Depois monto a carteira, explico cada escolha e acompanho de perto. Sem jargão e sem empurrar produto.</p>
+        <dl class="facts" data-fade>
+          <div><dt>Formação</dt><dd>Ciências Econômicas, PUCRS</dd></div>
+          <div><dt>Certificação</dt><dd>ANCORD</dd></div>
+          <div><dt>Base</dt><dd>Porto Alegre, RS</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 3 · Trajetória -->
+    <section class="journey" id="trajetoria" data-journey>
+      <div class="journey__sticky">
+        <div class="journey__view" data-view="journey"></div>
+        <p class="eyebrow journey__eyebrow">Trajetória</p>
+        <div class="journey__labels">
+          <article class="mile" data-mile>
+            <h3 class="mile__title">Exército Brasileiro</h3>
+            <p class="mile__place">Ijuí, RS · 11 meses</p>
+            <p class="mile__desc">Serviço militar. Aprendi pontualidade, hierarquia e a cumprir o que prometo.</p>
+          </article>
+          <article class="mile" data-mile>
+            <h3 class="mile__title">Economia na PUCRS</h3>
+            <p class="mile__place">Porto Alegre · 2022 a 2026</p>
+            <p class="mile__desc">Bacharelado em Ciências Econômicas, com ênfase em finanças. Formado em janeiro de 2026.</p>
+          </article>
+          <article class="mile" data-mile>
+            <h3 class="mile__title">SDR na Nattos Capital</h3>
+            <p class="mile__place">Abril a junho de 2026</p>
+            <p class="mile__desc">Prospecção e relacionamento com clientes. Certificação ANCORD em cerca de um mês de estudo.</p>
+          </article>
+          <article class="mile" data-mile>
+            <h3 class="mile__title">Assessor de investimentos</h3>
+            <p class="mile__place">Desde julho de 2026</p>
+            <p class="mile__desc">Vinculado à Nattos Capital, escritório credenciado ao BTG Pactual.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Como posso te ajudar -->
+    <section class="help" id="ajuda" data-help>
+      <div class="help__sticky">
+        <div class="help__top">
+          <p class="eyebrow">Como posso te ajudar</p>
+          <p class="help__count"><span data-help-n>01</span> / 04</p>
+        </div>
+        <div class="help__view" data-view="board"></div>
+        <ul class="sr">
+          <li data-service data-title="Investimentos" data-text="Uma carteira montada para o seu objetivo e o seu prazo, com renda fixa, fundos e renda variável.">Investimentos</li>
+          <li data-service data-title="Previdência" data-text="Planos de previdência privada para aposentadoria e sucessão, escolhidos pelo seu horizonte.">Previdência</li>
+          <li data-service data-title="Reserva" data-text="Uma reserva de emergência bem aplicada e disponível no dia em que você precisar.">Reserva</li>
+          <li data-service data-title="Patrimônio" data-text="A visão do todo: objetivos, prazos, impostos e proteção da família.">Patrimônio</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5 · Como funciona -->
+    <section class="how" id="como" data-how>
+      <div class="how__sticky">
+        <p class="eyebrow how__eyebrow">Como funciona</p>
+        <div class="how__stack">
+          <article class="card" data-card>
+            <span class="card__n">01</span>
+            <div><h3 class="card__title">Primeira conversa</h3><p class="card__text">Um café ou uma chamada de meia hora. Você me conta o que quer construir, eu escuto e tiro as dúvidas.</p></div>
+          </article>
+          <article class="card" data-card>
+            <span class="card__n">02</span>
+            <div><h3 class="card__title">Diagnóstico</h3><p class="card__text">Olho onde o seu dinheiro está hoje, quanto ele custa em taxas e quanto risco você corre.</p></div>
+          </article>
+          <article class="card" data-card>
+            <span class="card__n">03</span>
+            <div><h3 class="card__title">Carteira</h3><p class="card__text">Proponho uma carteira com o motivo de cada escolha, por escrito. Você decide com calma.</p></div>
+          </article>
+          <article class="card" data-card>
+            <span class="card__n">04</span>
+            <div><h3 class="card__title">Acompanhamento</h3><p class="card__text">Revisões periódicas e alguém que atende o telefone quando o mercado balança.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Nattos + BTG -->
+    <section class="press" id="estrutura" data-press-section>
+      <div class="press__view" data-view="press"></div>
+      <div class="press__inner">
+        <p class="eyebrow eyebrow--dark">Estrutura</p>
+        <h2 class="press__lead">Atendimento de perto, com a estrutura de um dos maiores bancos de investimento da América Latina.</h2>
+        <div class="press__cols">
+          <div>
+            <h3 class="press__name gl-press" data-press>Nattos Capital</h3>
+            <p>Escritório de assessoria de investimentos em Porto Alegre, credenciado ao BTG Pactual. É onde eu trabalho e de onde atendo você.</p>
+          </div>
+          <div>
+            <h3 class="press__name gl-press" data-press>BTG Pactual</h3>
+            <p>Seus investimentos ficam no banco, em seu nome, e você acompanha tudo pelo app e pela plataforma do BTG.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Contato -->
+    <section class="contact" id="contato">
+      <div class="contact__text">
+        <p class="eyebrow">Contato</p>
+        <h2 class="contact__title" data-split>Vamos conversar?</h2>
+        <p class="contact__sub" data-fade>A primeira conversa é sem compromisso. Me chama no WhatsApp e a gente marca um café.</p>
+        <div class="contact__actions" data-fade>
+          <a class="pill pill--big" href="https://wa.me/5551999999999" target="_blank" rel="noopener"><span>Chamar no WhatsApp</span></a>
+          <a class="ulink" href="mailto:davi.cogo@nattoscapital.com.br">E-mail</a>
+          <a class="ulink" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <div class="contact__view" data-view="card" role="img" aria-label="Cartão de visitas de Davi Cogo"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot__legal">Davi Cogo é assessor de investimentos vinculado à Nattos Capital, que atua como preposta do Banco BTG Pactual S.A., na forma da Resolução CVM nº 178/2023. O atendimento pode ser feito por meio de outros profissionais do escritório. Investimentos envolvem riscos, inclusive de perda do capital. Rentabilidade passada não é garantia de rentabilidade futura. As informações deste site têm caráter informativo e não constituem recomendação de investimento.</p>
+    <p class="foot__line"><span>© 2026 Davi Cogo</span><span>Porto Alegre, RS</span></p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
