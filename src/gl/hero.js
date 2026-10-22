@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { FG, DISPLAY, SANS, clamp, damp, easeOut, easeInOut, canvasTex, raw } from './core.js';
+import { BG, FG, DISPLAY, SANS, clamp, damp, easeOut, easeInOut, canvasTex, raw } from './core.js';
 
 /*
  * Hero: Davi stands in the middle; two rings of type orbit him in 3D.
@@ -10,18 +10,57 @@ const PHOTO_FRAG = /* glsl */ `
 uniform sampler2D uTex;
 uniform float uIntro, uOut, uTime;
 varying vec2 vUv;
+float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 void main() {
   vec4 t = texture2D(uTex, vUv);
-  // gentle grade: a touch cooler in the shadows, warm highlights
-  float l = dot(t.rgb, vec3(.299, .587, .114));
-  vec3 c = mix(t.rgb * vec3(.92, .96, 1.04), t.rgb * vec3(1.03, 1., .96), smoothstep(.3, .8, l));
-  c = mix(vec3(l), c, .9);
-  float a = t.a;
-  a *= smoothstep(0., .22, vUv.y);                       // dissolve into the floor
+  // soften the matte so the edge reads as focus fall-off, not scissors
+  // pull the matte in a touch: the outermost pixels still carry the bright window behind him
+  float a = mix(t.a, texture2D(uTex, vUv, 1.6).a, .5);
+  a = smoothstep(.3, .97, a);
+
+  // grade it into the scene: less saturation, deeper mids, the white shirt pulled down
+  vec3 c = t.rgb;
+  // edge pixels: replace the window spill with the colour from just inside the figure
+  float inner = texture2D(uTex, vUv, 2.2).a;
+  vec3 deep = texture2D(uTex, vUv, 2.2).rgb / max(inner, .001);
+  c = mix(c, min(c, deep), smoothstep(.98, .55, t.a));
+  float l = dot(c, vec3(.299, .587, .114));
+  c = mix(vec3(l), c, .84) * vec3(.95, .97, 1.);
+  c = pow(c, vec3(1.1));
+  c *= mix(1., .8, smoothstep(.72, 1., l));
+
+  // studio light: key from the left, falling off across the body
+  c *= mix(.72, 1.05, smoothstep(.85, .22, vUv.x));
+  // rim lights where the figure meets the dark: cool from the back-right, warm from the left
+  float rimR = clamp(a - texture2D(uTex, vUv + vec2(.014, .006), 1.2).a, 0., 1.);
+  float rimL = clamp(a - texture2D(uTex, vUv + vec2(-.012, .004), 1.2).a, 0., 1.);
+  c += vec3(.5, .6, .78) * rimR * .22 + vec3(.95, .82, .68) * rimL * .08;
+
+  // the body sinks into the dark towards the bottom of the frame
+  c *= mix(.3, 1., smoothstep(.0, .5, vUv.y));
+  a *= smoothstep(0., .2, vUv.y);
+
+  c += (hash(floor(gl_FragCoord.xy) + floor(uTime * 12.)) - .5) * .03;
+
   float rise = smoothstep(0., 1., (uIntro * 1.35 - (1. - vUv.y) * .35));
-  a *= rise;
-  a *= 1. - smoothstep(.55, 1., uOut);
+  a *= rise * (1. - smoothstep(.55, 1., uOut));
   gl_FragColor = vec4(c, a);
+}
+`;
+
+// a soft pool of light on the backdrop behind him, with the same grain as the photo
+const BACK_FRAG = /* glsl */ `
+uniform vec3 uBg;
+uniform vec2 uCenter;
+uniform float uRadius, uIntro, uTime;
+varying vec3 vW;
+float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+void main() {
+  vec2 d = (vW.xy - uCenter) / vec2(uRadius * 1.15, uRadius);
+  float glow = exp(-dot(d, d) * 1.6);
+  vec3 c = uBg + vec3(.07, .085, .11) * glow * uIntro;
+  c += (hash(floor(gl_FragCoord.xy) + floor(uTime * 12.)) - .5) * .02;
+  gl_FragColor = vec4(c, 1.);
 }
 `;
 
@@ -128,6 +167,27 @@ export class Hero {
     this.photo.renderOrder = 1;
     this.scene.add(this.photo);
 
+    this.backU = {
+      uBg: { value: raw(BG) },
+      uCenter: { value: new THREE.Vector2(0, 0) },
+      uRadius: { value: 2 },
+      uIntro: { value: 0 },
+      uTime: { value: 0 },
+    };
+    this.back = new THREE.Mesh(
+      new THREE.PlaneGeometry(40, 30),
+      new THREE.ShaderMaterial({
+        vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position,1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+        fragmentShader: BACK_FRAG,
+        uniforms: this.backU,
+        depthTest: false,
+        depthWrite: false,
+      }),
+    );
+    this.back.position.z = -2;
+    this.back.renderOrder = -1;
+    this.scene.add(this.back);
+
     this.big = makeRing({
       text: 'Davi Cogo  ·  ',
       font: `300 220px ${DISPLAY}`,
@@ -194,6 +254,11 @@ export class Hero {
     const io = easeOut(intro);
 
     this.photoU.uIntro.value = clamp(intro * 1.4);
+    this.photoU.uTime.value = S.time;
+    this.backU.uTime.value = S.time;
+    this.backU.uIntro.value = easeOut(clamp(intro * 1.2)) * (1 - out);
+    this.backU.uCenter.value.set(this.photo.position.x * 0.5, this.photoY + this.photoSize * 0.18);
+    this.backU.uRadius.value = this.photoSize * 0.55;
     this.photoU.uOut.value = out;
     this.photo.position.set(this.tx * 0.07, this.photoY - (1 - io) * 0.5 - out * 1.2, 0);
 

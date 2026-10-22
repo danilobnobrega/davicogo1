@@ -148,17 +148,18 @@ main, .foot { position: relative; z-index: 1; }
   transform-origin: 50% 100% -0.4em;
   transform: rotateX(-96deg);
   opacity: 0;
-  transition: transform 1.1s var(--ease), opacity 0.4s linear, color 0.4s;
+  transition: transform 1.1s var(--ease), opacity 0.4s linear, color 0.9s var(--ease), translate 0.9s var(--ease);
 }
 .menu-open .menu__w { transform: none; opacity: 1; }
-.menu__list li:nth-child(1) .menu__w { transition-delay: 0.18s; }
-.menu__list li:nth-child(2) .menu__w { transition-delay: 0.23s; }
-.menu__list li:nth-child(3) .menu__w { transition-delay: 0.28s; }
-.menu__list li:nth-child(4) .menu__w { transition-delay: 0.33s; }
-.menu__list li:nth-child(5) .menu__w { transition-delay: 0.38s; }
-.menu__list li:nth-child(6) .menu__w { transition-delay: 0.43s; }
+.menu__list li:nth-child(1) .menu__w { transition-delay: 0.18s, 0.18s, 0s, 0s; }
+.menu__list li:nth-child(2) .menu__w { transition-delay: 0.23s, 0.23s, 0s, 0s; }
+.menu__list li:nth-child(3) .menu__w { transition-delay: 0.28s, 0.28s, 0s, 0s; }
+.menu__list li:nth-child(4) .menu__w { transition-delay: 0.33s, 0.33s, 0s, 0s; }
+.menu__list li:nth-child(5) .menu__w { transition-delay: 0.38s, 0.38s, 0s, 0s; }
+.menu__list li:nth-child(6) .menu__w { transition-delay: 0.43s, 0.43s, 0s, 0s; }
+/* hovering one item quietly dims the others and nudges the chosen one along */
 .menu__list:hover a .menu__w { color: var(--fg-3); }
-.menu__list a:hover .menu__w { color: var(--fg); font-style: italic; }
+.menu__list a:hover .menu__w { color: var(--fg); translate: 1.2vw 0; }
 .menu__foot { position: absolute; left: var(--pad); bottom: var(--pad); color: var(--fg-3); font-size: 0.85rem; }
 
 /* ── 1 · hero ── */

@@ -142,11 +142,49 @@ async function boot() {
   let lastY = 0;
   let lastNow = performance.now();
 
+  /* trajetória: if the scroll stops between two years, glide to the nearest one */
+  const journeyEl = $('[data-journey]');
+  let lastUserScroll = 0;
+  let snapping = false;
+  const userInput = () => {
+    snapping = false;
+    lastUserScroll = performance.now();
+  };
+  // lenis keeps easing by fractions of a pixel for a long time; only real movement counts
+  lenis.on('scroll', () => {
+    if (!snapping && Math.abs(lenis.velocity) > 0.35) lastUserScroll = performance.now();
+  });
+  addEventListener('wheel', userInput, { passive: true });
+  addEventListener('touchstart', userInput, { passive: true });
+  addEventListener('keydown', userInput);
+
   function loop(now) {
     const dt = Math.min(0.05, (now - lastNow) / 1000);
     lastNow = now;
     lenis.raf(now);
     const vh = innerHeight;
+
+    {
+      const r = journeyEl.getBoundingClientRect();
+      const span = r.height - vh;
+      const p = -r.top / span;
+      const steps = 3;
+      if (!snapping && p > 0.002 && p < 0.998 && now - lastUserScroll > 200 && !root.classList.contains('menu-open')) {
+        const t = p * steps;
+        const k = Math.round(t);
+        if (Math.abs(t - k) > 0.004) {
+          snapping = true;
+          lenis.scrollTo(lenis.scroll + r.top + (k / steps) * span, {
+            duration: 1.1,
+            easing: (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2),
+            onComplete: () => {
+              snapping = false;
+              lastUserScroll = performance.now();
+            },
+          });
+        }
+      }
+    }
 
     /* help: which service is up */
     {

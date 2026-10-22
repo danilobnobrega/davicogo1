@@ -35,7 +35,7 @@ function textGeometry(font, text, size) {
 }
 
 const YEARS = ['2021', '2022', '2026', 'Hoje'];
-const GAP = 30;
+const GAP = 17.5;
 
 export class Journey {
   constructor(S, el, labels, sectionEl, fontUrl) {
@@ -128,7 +128,7 @@ export class Journey {
 
     const t = this.p * (YEARS.length - 1);
     const i = Math.min(YEARS.length - 2, Math.floor(t));
-    const f = smooth(0.12, 0.88, t - i);
+    const f = smooth(0, 1, t - i);
     const focus = (i + f) * GAP;
     const mobile = S.mobile;
 
