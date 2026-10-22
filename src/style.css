@@ -306,23 +306,6 @@ main, .foot { position: relative; z-index: 1; }
 .foot__line { margin-top: 4vh; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--fg-2); }
 
 /* ── mobile ── */
-@media (max-width: 820px) {
-  .about { display: block; padding: 14vh var(--pad); }
-  .about__text { margin-top: 44px; }
-  .facts { grid-template-columns: 1fr; }
-  .facts div { padding: 12px 0; }
-  .mile { width: 74vw; }
-  .help__view { margin: 3vh 12px 10vh; }
-  .card { grid-template-columns: 1fr; align-items: start; gap: 2vh; border-radius: 18px; }
-  .card__n { font-size: 34vw; }
-  .how__stack { height: 62vh; }
-  .press__cols { grid-template-columns: 1fr; gap: 9vh; margin-top: 10vh; }
-  .press__name { font-size: 15vw; }
-  .contact { display: flex; flex-direction: column-reverse; align-items: stretch; gap: 6vh; padding-top: 12vh; }
-  .contact__view { aspect-ratio: 0.95; width: 100%; }
-  .foot__line { flex-direction: column; gap: 6px; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   [data-split] .w > span, [data-fade] { transition: none; transform: none; opacity: 1; }
 }
